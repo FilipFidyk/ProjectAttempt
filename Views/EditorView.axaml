@@ -9,18 +9,100 @@
   x:Class="ProjectAttempt.Views.EditorView"
   x:DataType="vm:EditorViewModel">
 
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <GeometryDrawing x:Key="SmallGridGeometry"
+                       Geometry="M0,0 L0,1 0.03,1 0.03,0.03 1,0.03 1,0 Z"
+                       Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+      <GeometryDrawing x:Key="LargeGridGeometry"
+                       Geometry="M0,0 L0,1 0.015,1 0.015,0.015 1,0.015 1,0 Z"
+                       Brush="{StaticResource NodifyEditor.SelectionRectangleBackgroundBrush}" />
+
+      <DrawingBrush x:Key="SmallGridLinesDrawingBrush"
+                    TileMode="Tile"
+                    TransformOrigin="0,0"
+                    DestinationRect="0 0 20 20"
+                    Transform="{Binding ViewportTransform, ElementName=Editor}"
+                    Drawing="{StaticResource SmallGridGeometry}" />
+
+      <DrawingBrush x:Key="LargeGridLinesDrawingBrush"
+                    TileMode="Tile"
+                    TransformOrigin="0,0"
+                    Opacity="0.5"
+                    DestinationRect="0 0 100 100"
+                    Transform="{Binding ViewportTransform, ElementName=Editor}"
+                    Drawing="{StaticResource LargeGridGeometry}" />
+    </ResourceDictionary>
+  </UserControl.Resources>
+
   <Design.DataContext>
     <vm:EditorViewModel />
   </Design.DataContext>
 
-  <Grid>
-    <nodify:NodifyEditor ItemsSource="{Binding Nodes}">
+  <Grid Background="{StaticResource NodifyEditor.BackgroundBrush}">
+    <nodify:NodifyEditor x:Name="Editor"
+                         Background="{StaticResource SmallGridLinesDrawingBrush}"
+                         ItemsSource="{Binding Nodes}"
+                         Connections="{Binding Connections}"
+                         PendingConnection="{Binding PendingConnection}"
+                         DisconnectConnectorCommand="{Binding DisconnectConnectorCommand}">
       <nodify:NodifyEditor.ItemTemplate>
         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
-          <nodify:Node Header="{Binding Title}" />
+          <!-- Node Template -->
+          <nodify:Node Header="{Binding Title}"
+                       Input="{Binding Input}"
+                       Output="{Binding Output}">
+
+            <!-- Node input template -->
+            <nodify:Node.InputConnectorTemplate>
+              <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
+                <nodify:NodeInput Header="{Binding Title}"
+                                  IsConnected="{Binding IsConnected}"
+                                  Anchor="{Binding Anchor, Mode=OneWayToSource}" />
+              </DataTemplate>
+            </nodify:Node.InputConnectorTemplate>
+
+            <!-- Node output template -->
+            <nodify:Node.OutputConnectorTemplate>
+              <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
+                <nodify:NodeOutput Header="{Binding Title}"
+                                   IsConnected="{Binding IsConnected}"
+                                   Anchor="{Binding Anchor, Mode=OneWayToSource}" />
+              </DataTemplate>
+            </nodify:Node.OutputConnectorTemplate>
+          </nodify:Node>
         </DataTemplate>
       </nodify:NodifyEditor.ItemTemplate>
+
+      <nodify:NodifyEditor.ItemContainerTheme>
+        <ControlTheme TargetType="{x:Type nodify:ItemContainer}"
+                      BasedOn="{StaticResource {x:Type nodify:ItemContainer}}"
+                      x:DataType="vm:NodeViewModel">
+          <Setter Property="Location" Value="{Binding Location}" />
+        </ControlTheme>
+      </nodify:NodifyEditor.ItemContainerTheme>
+
+      <!-- Connector template -->
+      <nodify:NodifyEditor.ConnectionTemplate>
+        <DataTemplate DataType="{x:Type vm:ConnectionViewModel}">
+          <nodify:LineConnection Source="{Binding Source.Anchor}"
+                                 Target="{Binding Target.Anchor}" />
+        </DataTemplate>
+      </nodify:NodifyEditor.ConnectionTemplate>
+
+      <!-- Pending Connection template -->
+      <nodify:NodifyEditor.PendingConnectionTemplate>
+        <DataTemplate DataType="{x:Type vm:PendingConnectionViewModel}">
+          <nodify:PendingConnection StartedCommand="{Binding StartCommand}"
+                                    CompletedCommand="{Binding FinishCommand}"
+                                    AllowOnlyConnectors="True" />
+        </DataTemplate>
+      </nodify:NodifyEditor.PendingConnectionTemplate>
     </nodify:NodifyEditor>
+
+    <Grid Background="{StaticResource LargeGridLinesDrawingBrush}"
+          Panel.ZIndex="-2" />
   </Grid>
 
 </UserControl>

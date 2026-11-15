@@ -11,6 +11,16 @@
 
   <Application.Styles>
     <FluentTheme />
+    <Style Selector="TextBlock">
+      <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style Selector="TemplatedControl">
+      <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style Selector="Shape">
+      <Setter Property="Fill" Value="Black" />
+      <Setter Property="Stroke" Value="Black" />
+    </Style>
   </Application.Styles>
 
   <Application.Resources>
@@ -18,7 +28,31 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://Nodify/Themes/Generic.xaml" />
         <ResourceInclude Source="avares://Nodify/Themes/Light.xaml" />
+        <ResourceInclude Source="avares://ProjectAttempt/Assets/Lamp.axaml" />
       </ResourceDictionary.MergedDictionaries>
+
+      <Color x:Key="NodifyEditor.ForegroundColor">Black</Color>
+      <Color x:Key="ItemContainer.BorderColor">Black</Color>
+      <Color x:Key="ItemContainer.SelectedColor">Black</Color>
+      <Color x:Key="Node.ForegroundColor">Black</Color>
+      <Color x:Key="Node.HeaderColor">Black</Color>
+      <Color x:Key="Node.HeaderForegroundColor">White</Color>
+      <Color x:Key="Node.BorderColor">Black</Color>
+      <Color x:Key="Connector.BackgroundColor">Black</Color>
+      <Color x:Key="Connector.ForegroundColor">White</Color>
+      <Color x:Key="Connector.BorderColor">Black</Color>
+      <Color x:Key="NodeInput.ForegroundColor">Black</Color>
+      <Color x:Key="NodeInput.BorderColor">Black</Color>
+      <Color x:Key="NodeOutput.ForegroundColor">Black</Color>
+      <Color x:Key="NodeOutput.BorderColor">Black</Color>
+      <Color x:Key="Connection.StrokeColor">Black</Color>
+      <Color x:Key="LineConnection.StrokeColor">Black</Color>
+      <Color x:Key="CircuitConnection.StrokeColor">Black</Color>
+      <Color x:Key="StepConnection.StrokeColor">Black</Color>
+      <Color x:Key="PendingConnection.StrokeColor">Black</Color>
+      <Color x:Key="PendingConnection.BorderColor">Black</Color>
+      <SolidColorBrush x:Key="CircuitStrokeBrush" Color="Black" />
+      <x:Double x:Key="CircuitStrokeThickness">2</x:Double>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

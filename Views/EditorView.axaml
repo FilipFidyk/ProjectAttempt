@@ -47,47 +47,97 @@
                          Connections="{Binding Connections}"
                          PendingConnection="{Binding PendingConnection}"
                          DisconnectConnectorCommand="{Binding DisconnectConnectorCommand}">
-      <nodify:NodifyEditor.ItemTemplate>
-        <DataTemplate DataType="{x:Type vm:NodeViewModel}">
-          <!-- Node Template -->
-          <nodify:Node Header="{Binding Title}"
-                       Input="{Binding Input}"
-                       Output="{Binding Output}">
-
-            <!-- Node input template -->
-            <nodify:Node.InputConnectorTemplate>
-              <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                <nodify:NodeInput Header="{Binding Title}"
-                                  IsConnected="{Binding IsConnected}"
-                                  Anchor="{Binding Anchor, Mode=OneWayToSource}" />
-              </DataTemplate>
-            </nodify:Node.InputConnectorTemplate>
-
-            <!-- Node output template -->
-            <nodify:Node.OutputConnectorTemplate>
-              <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                <nodify:NodeOutput Header="{Binding Title}"
-                                   IsConnected="{Binding IsConnected}"
-                                   Anchor="{Binding Anchor, Mode=OneWayToSource}" />
-              </DataTemplate>
-            </nodify:Node.OutputConnectorTemplate>
-          </nodify:Node>
+      <nodify:NodifyEditor.DataTemplates>
+        <DataTemplate DataType="{x:Type vm:NodeViewModel2}">
+          <Canvas Width="80" Height="40">
+            <ContentControl Canvas.Left="0"
+                            ContentTemplate="{StaticResource LampTemplate}" />
+          </Canvas>
         </DataTemplate>
-      </nodify:NodifyEditor.ItemTemplate>
+      </nodify:NodifyEditor.DataTemplates>
 
       <nodify:NodifyEditor.ItemContainerTheme>
         <ControlTheme TargetType="{x:Type nodify:ItemContainer}"
                       BasedOn="{StaticResource {x:Type nodify:ItemContainer}}"
-                      x:DataType="vm:NodeViewModel">
+                      x:DataType="vm:NodeViewModel2">
           <Setter Property="Location" Value="{Binding Location}" />
+          <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+          <Setter Property="ClipToBounds" Value="False" />
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type nodify:ItemContainer}" x:DataType="vm:NodeViewModel2">
+                <Grid>
+                  <ContentPresenter Content="{TemplateBinding Content}" />
+                  <Border
+                    IsHitTestVisible="False"
+                    Opacity="0"
+                    BorderBrush="Orange"
+                    BorderThickness="1" />
+                  <Canvas Width="80"
+                          Height="40"
+                          ClipToBounds="False">
+                    <nodify:Connector DataContext="{Binding LeftConnector}"
+                                      Canvas.Left="-8"
+                                      Canvas.Top="13"
+                                      Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                      IsConnected="{Binding IsConnected}"
+                                      Opacity="0"
+                                      Width="16"
+                                      Height="16" />
+
+                    <nodify:Connector DataContext="{Binding RightConnector}"
+                                      Canvas.Left="72"
+                                      Canvas.Top="13"
+                                      Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                      IsConnected="{Binding IsConnected}"
+                                      Opacity="0"
+                                      Width="16"
+                                      Height="16" />
+                  </Canvas>
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+
+          <Style Selector="^:selected:null-previewing-selection">
+            <Style Selector="^ nodify|Connector">
+              <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <Style Selector="^ Border">
+              <Setter Property="Opacity" Value="1" />
+            </Style>
+          </Style>
+
+          <Style Selector="^:selected:previewing-selection">
+            <Style Selector="^ nodify|Connector">
+              <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <Style Selector="^ Border">
+              <Setter Property="Opacity" Value="1" />
+            </Style>
+          </Style>
+
+          <Style Selector="^:Selected">
+            <Setter Property="Panel.ZIndex" Value="1"/>
+          </Style>
+
         </ControlTheme>
       </nodify:NodifyEditor.ItemContainerTheme>
 
       <!-- Connector template -->
       <nodify:NodifyEditor.ConnectionTemplate>
         <DataTemplate DataType="{x:Type vm:ConnectionViewModel}">
-          <nodify:LineConnection Source="{Binding Source.Anchor}"
-                                 Target="{Binding Target.Anchor}" />
+          <nodify:StepConnection Source="{Binding Source.Anchor}"
+                                 Target="{Binding Target.Anchor}"
+                                 SourceOffsetMode="None"
+                                 TargetOffsetMode="None"
+                                 SourcePosition="{Binding Source.ConnectorPosition}"
+                                 TargetPosition="{Binding Target.ConnectorPosition}"
+                                 ArrowEnds="None"
+                                 Stroke="{DynamicResource CircuitStrokeBrush}"
+                                 StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
         </DataTemplate>
       </nodify:NodifyEditor.ConnectionTemplate>
 

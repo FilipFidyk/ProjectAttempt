@@ -15,44 +15,46 @@ public class EditorViewModel : ViewModelBase
         PendingConnection = new(this);
         DisconnectConnectorCommand = new RelayCommand<ConnectorViewModel>(Disconnect);
 
-        var node1 = new NodeViewModel
+        var node1 = new NodeViewModel2
         {
-            Title = "Node1",
-            Location = new Point(10, 10),
+            Location = new Point(100, 100),
             Input = [
-                new ConnectorViewModel {
-                    Title = "In"
+                new ConnectorViewModel
+                {
+                    ConnectorPosition = ConnectorPosition.Left
                 }
             ],
             Output = [
-                new ConnectorViewModel {
-                    Title = "Out"
+                new ConnectorViewModel
+                {
+                    ConnectorPosition = ConnectorPosition.Right
                 }
             ]
         };
 
-        var node2 = new NodeViewModel
+        var node2 = new NodeViewModel2
         {
-            Title = "Node2",
-            Location = new Point(10, 50),
+            Location = new Point(10, 10),
             Input = [
-                new ConnectorViewModel {
-                    Title = "In"
+                new ConnectorViewModel
+                {
+                    ConnectorPosition = ConnectorPosition.Left
+                }
+            ],
+            Output = [
+                new ConnectorViewModel
+                {
+                    ConnectorPosition = ConnectorPosition.Right
                 }
             ]
         };
 
         Nodes.Add(node1);
         Nodes.Add(node2);
-
-        Connections.Add(new ConnectionViewModel(
-            node1.Output[0],
-            node2.Input[0]
-        ));
     }
 
 
-    public ObservableCollection<NodeViewModel> Nodes { get; } = [];
+    public ObservableCollection<NodeViewModel2> Nodes { get; } = [];
     public ObservableCollection<ConnectionViewModel> Connections { get; } = [];
 
     public PendingConnectionViewModel PendingConnection { get; }
@@ -63,6 +65,12 @@ public class EditorViewModel : ViewModelBase
     {
         if (source != target)
         {
+            if (source.ConnectorPosition == ConnectorPosition.Left &&
+                target.ConnectorPosition == ConnectorPosition.Right)
+            {
+                (source, target) = (target, source);
+            }
+
             Connections.Add(new ConnectionViewModel(source, target));
         }
     }

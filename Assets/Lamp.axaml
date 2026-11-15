@@ -1,0 +1,36 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Background="#F5F5F5" Padding="20">
+      <ContentControl ContentTemplate="{DynamicResource LampTemplate}" />
+    </Border>
+  </Design.PreviewWith>
+
+  <EllipseGeometry x:Key="LampBody"
+                   Center="40,20"
+                   RadiusX="18"
+                   RadiusY="18" />
+
+  <DataTemplate x:Key="LampTemplate">
+    <Canvas Width="80" Height="40">
+      <Path Data="{StaticResource LampBody}"
+            Fill="White"
+            Stroke="{DynamicResource CircuitStrokeBrush}"
+            StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
+
+      <Line StartPoint="27,7" EndPoint="53,33"
+            Stroke="{DynamicResource CircuitStrokeBrush}"
+            StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
+      <Line StartPoint="53,7" EndPoint="27,33"
+            Stroke="{DynamicResource CircuitStrokeBrush}"
+            StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
+
+      <Line StartPoint="0,20.5" EndPoint="21,20.5"
+            Stroke="{DynamicResource CircuitStrokeBrush}"
+            StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
+      <Line StartPoint="59,20.5" EndPoint="80,20.5"
+            Stroke="{DynamicResource CircuitStrokeBrush}"
+            StrokeThickness="{DynamicResource CircuitStrokeThickness}" />
+    </Canvas>
+  </DataTemplate>
+</ResourceDictionary>

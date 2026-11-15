@@ -1,5 +1,6 @@
 using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Nodify;
 
 namespace ProjectAttempt.ViewModels;
 
@@ -13,4 +14,7 @@ public partial class ConnectorViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool isConnected;
+
+    [ObservableProperty]
+    private ConnectorPosition connectorPosition = ConnectorPosition.Left;
 }

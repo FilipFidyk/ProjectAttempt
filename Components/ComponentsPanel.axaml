@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:ProjectAttempt.Models"
+             xmlns:viewmodels="using:ProjectAttempt.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ProjectAttempt.Components.ComponentsPanel"
+             x:DataType="viewmodels:ComponentPanelViewModel">
+
+  <Border BorderThickness="1"
+          Padding="10">
+    <TabControl ItemsSource="{Binding Tabs}"
+                SelectedItem="{Binding SelectedTab}">
+
+      <TabControl.ItemTemplate>
+        <DataTemplate x:DataType="viewmodels:TabItemViewModel">
+          <TextBlock Text="{Binding Header}"/>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+
+      <TabControl.ContentTemplate >
+        <DataTemplate x:DataType="viewmodels:TabItemViewModel">
+          <ListBox ItemsSource="{Binding Content}">
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="models:NodeDefinition">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <ContentControl Content="{Binding}"
+                                  ContentTemplate="{Binding PreviewTemplate}" />
+                  <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+
+    </TabControl>
+  </Border>
+</UserControl>

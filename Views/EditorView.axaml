@@ -68,11 +68,9 @@
               <ControlTemplate TargetType="{x:Type nodify:ItemContainer}" x:DataType="vm:NodeViewModel2">
                 <Grid>
                   <ContentPresenter Content="{TemplateBinding Content}" />
-                  <Border
-                    IsHitTestVisible="False"
-                    Opacity="0"
-                    BorderBrush="Orange"
-                    BorderThickness="1" />
+                  <Border IsHitTestVisible="False"
+                          Opacity="0"
+                          BorderThickness="1" />
                   <Canvas Width="80"
                           Height="40"
                           ClipToBounds="False">

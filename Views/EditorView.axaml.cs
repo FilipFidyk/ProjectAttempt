@@ -2,9 +2,9 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using ProjectAttempt.Components;
+using ProjectAttempt;
 using ProjectAttempt.ViewModels;
-using Tmds.DBus.Protocol;
+
 
 namespace ProjectAttempt.Views;
 

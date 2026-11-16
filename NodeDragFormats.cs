@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Input;
 
-namespace ProjectAttempt.Components;
+namespace ProjectAttempt;
 
 internal static class NodeDragFormats
 {

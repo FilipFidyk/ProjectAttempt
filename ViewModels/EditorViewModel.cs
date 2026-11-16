@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -19,47 +18,10 @@ public class EditorViewModel : ViewModelBase
 
         PendingConnection = new(this);
         DisconnectConnectorCommand = new RelayCommand<ConnectorViewModel>(Disconnect);
-
-        var node1 = new NodeViewModel2
-        {
-            Location = new Point(100, 100),
-            Input = [
-                new ConnectorViewModel
-                {
-                    ConnectorPosition = ConnectorPosition.Left
-                }
-            ],
-            Output = [
-                new ConnectorViewModel
-                {
-                    ConnectorPosition = ConnectorPosition.Right
-                }
-            ]
-        };
-
-        var node2 = new NodeViewModel2
-        {
-            Location = new Point(10, 10),
-            Input = [
-                new ConnectorViewModel
-                {
-                    ConnectorPosition = ConnectorPosition.Left
-                }
-            ],
-            Output = [
-                new ConnectorViewModel
-                {
-                    ConnectorPosition = ConnectorPosition.Right
-                }
-            ]
-        };
-
-        Nodes.Add(node1);
-        Nodes.Add(node2);
     }
 
 
-    public ObservableCollection<NodeViewModel2> Nodes { get; } = [];
+    public ObservableCollection<NodeViewModel> Nodes { get; } = [];
     public ObservableCollection<ConnectionViewModel> Connections { get; } = [];
 
     public PendingConnectionViewModel PendingConnection { get; }
@@ -69,12 +31,14 @@ public class EditorViewModel : ViewModelBase
     public void AddNode(string definitionName, Point point)
     {
         NodeDefinition nodeDef = _ncs.Get(definitionName);
-        NodeViewModel2 nvm2 = new("text", [], [])
+        NodeViewModel nvm = new(nodeDef)
         {
             Location = point
         };
-        Nodes.Add(nvm2);
+
+        Nodes.Add(nvm);
     }
+
     public void Connect(ConnectorViewModel source, ConnectorViewModel target)
     {
         if (source != target)

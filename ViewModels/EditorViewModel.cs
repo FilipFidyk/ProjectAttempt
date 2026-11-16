@@ -31,10 +31,10 @@ public class EditorViewModel : ViewModelBase
     public void AddNode(string definitionName, Point point)
     {
         NodeDefinition nodeDef = _ncs.Get(definitionName);
-        NodeViewModel nvm = new(nodeDef)
-        {
-            Location = point
-        };
+        NodeViewModel nvm = nodeDef.InputCount == 2
+            ? new BinaryNodeViewModel(nodeDef)
+            : new NodeViewModel(nodeDef);
+        nvm.Location = point;
 
         Nodes.Add(nvm);
     }

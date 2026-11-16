@@ -48,10 +48,63 @@
                          PendingConnection="{Binding PendingConnection}"
                          DisconnectConnectorCommand="{Binding DisconnectConnectorCommand}">
       <nodify:NodifyEditor.DataTemplates>
+        <DataTemplate DataType="{x:Type vm:BinaryNodeViewModel}"
+                      x:DataType="vm:BinaryNodeViewModel">
+          <Canvas Width="80" Height="60">
+            <ContentControl Canvas.Left="0"
+                            ContentTemplate="{Binding DataTemplate}" />
+
+            <nodify:Connector DataContext="{Binding LeftConnector}"
+                              Canvas.Left="-8"
+                              Canvas.Top="12"
+                              Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                              IsConnected="{Binding IsConnected}"
+                              Opacity="{Binding Opacity}"
+                              Width="16"
+                              Height="16" />
+
+            <nodify:Connector DataContext="{Binding SecondLeftConnnctor}"
+                              Canvas.Left="-8"
+                              Canvas.Top="32"
+                              Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                              IsConnected="{Binding IsConnected}"
+                              Opacity="{Binding Opacity}"
+                              Width="16"
+                              Height="16" />
+
+            <nodify:Connector DataContext="{Binding RightConnector}"
+                              Canvas.Left="72"
+                              Canvas.Top="22"
+                              Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                              IsConnected="{Binding IsConnected}"
+                              Opacity="{Binding Opacity}"
+                              Width="16"
+                              Height="16" />
+          </Canvas>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
           <Canvas Width="80" Height="40">
             <ContentControl Canvas.Left="0"
                             ContentTemplate="{Binding DataTemplate}" />
+
+            <nodify:Connector DataContext="{Binding LeftConnector}"
+                              Canvas.Left="-8"
+                              Canvas.Top="12"
+                              Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                              IsConnected="{Binding IsConnected}"
+                              Opacity="{Binding Opacity}"
+                              Width="16"
+                              Height="16" />
+
+            <nodify:Connector DataContext="{Binding RightConnector}"
+                              Canvas.Left="72"
+                              Canvas.Top="12"
+                              Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                              IsConnected="{Binding IsConnected}"
+                              Opacity="{Binding Opacity}"
+                              Width="16"
+                              Height="16" />
           </Canvas>
         </DataTemplate>
       </nodify:NodifyEditor.DataTemplates>
@@ -68,54 +121,10 @@
               <ControlTemplate TargetType="{x:Type nodify:ItemContainer}" x:DataType="vm:NodeViewModel">
                 <Grid>
                   <ContentPresenter Content="{TemplateBinding Content}" />
-                  <Border IsHitTestVisible="False"
-                          Opacity="0"
-                          BorderThickness="1" />
-                  <Canvas Width="80"
-                          Height="40"
-                          ClipToBounds="False">
-                    <nodify:Connector DataContext="{Binding LeftConnector}"
-                                      Canvas.Left="-8"
-                                      Canvas.Top="13"
-                                      Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                      IsConnected="{Binding IsConnected}"
-                                      Opacity="0"
-                                      Width="16"
-                                      Height="16" />
-
-                    <nodify:Connector DataContext="{Binding RightConnector}"
-                                      Canvas.Left="72"
-                                      Canvas.Top="13"
-                                      Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                      IsConnected="{Binding IsConnected}"
-                                      Opacity="0"
-                                      Width="16"
-                                      Height="16" />
-                  </Canvas>
                 </Grid>
               </ControlTemplate>
             </Setter.Value>
           </Setter>
-
-          <Style Selector="^:selected:null-previewing-selection">
-            <Style Selector="^ nodify|Connector">
-              <Setter Property="Opacity" Value="1" />
-            </Style>
-
-            <Style Selector="^ Border">
-              <Setter Property="Opacity" Value="1" />
-            </Style>
-          </Style>
-
-          <Style Selector="^:selected:previewing-selection">
-            <Style Selector="^ nodify|Connector">
-              <Setter Property="Opacity" Value="1" />
-            </Style>
-
-            <Style Selector="^ Border">
-              <Setter Property="Opacity" Value="1" />
-            </Style>
-          </Style>
 
           <Style Selector="^:Selected">
             <Setter Property="Panel.ZIndex" Value="1"/>

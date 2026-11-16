@@ -6,6 +6,10 @@ namespace ProjectAttempt.ViewModels;
 
 public partial class ConnectorViewModel : ViewModelBase
 {
+    public ConnectorViewModel(ConnectorPosition position)
+    {
+        connectorPosition = position;
+    }
     [ObservableProperty]
     private string title = string.Empty;
 
@@ -16,5 +20,8 @@ public partial class ConnectorViewModel : ViewModelBase
     private bool isConnected;
 
     [ObservableProperty]
-    private ConnectorPosition connectorPosition = ConnectorPosition.Left;
+    private double opacity;
+
+    [ObservableProperty]
+    private ConnectorPosition connectorPosition;
 }

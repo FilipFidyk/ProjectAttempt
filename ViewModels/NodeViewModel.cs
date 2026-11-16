@@ -1,9 +1,8 @@
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls.Templates;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Nodify;
 using ProjectAttempt.Models;
 
 namespace ProjectAttempt.ViewModels;
@@ -19,12 +18,23 @@ public partial class NodeViewModel : ViewModelBase
     {
         _location = default;
 
-        LeftConnector = new();
-        RightConnector = new();
+        LeftConnector = new(ConnectorPosition.Left);
+        RightConnector = new(ConnectorPosition.Right);
         DataTemplate = nodeDef.PreviewTemplate;
     }
     public ConnectorViewModel LeftConnector { get; }
     public ConnectorViewModel RightConnector { get; }
+
+    partial void OnIsSelectedChanged(bool value)
+    {
+        SetConnectorOpacity(value ? 1 : 0);
+    }
+
+    protected virtual void SetConnectorOpacity(double opacity)
+    {
+        LeftConnector.Opacity = opacity;
+        RightConnector.Opacity = opacity;
+    }
 
     public IDataTemplate DataTemplate { get; }
     public Point Location

@@ -12,7 +12,8 @@ public class NodeCatalogueStore
     public NodeCatalogueStore()
     {
         AllNodes = [
-            new("Lamp", "LampTemplate", ComponentType.Circuit)
+            new("Lamp", "LampTemplate", ComponentType.Circuit),
+            new("And Gate", "AndGateTemplate", ComponentType.Logic, 2)
         ];
     }
     public IEnumerable<NodeDefinition> AllNodes { get; }

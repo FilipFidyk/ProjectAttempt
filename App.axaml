@@ -29,6 +29,7 @@
         <ResourceInclude Source="avares://Nodify/Themes/Generic.xaml" />
         <ResourceInclude Source="avares://Nodify/Themes/Light.xaml" />
         <ResourceInclude Source="avares://ProjectAttempt/Assets/Lamp.axaml" />
+        <ResourceInclude Source="avares://ProjectAttempt/Assets/logicgate.axaml" />
       </ResourceDictionary.MergedDictionaries>
 
       <Color x:Key="NodifyEditor.ForegroundColor">Black</Color>

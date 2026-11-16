@@ -5,13 +5,18 @@ using System.Windows.Input;
 using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Nodify;
+using ProjectAttempt.Models;
+using ProjectAttempt.Stores;
 
 namespace ProjectAttempt.ViewModels;
 
 public class EditorViewModel : ViewModelBase
 {
-    public EditorViewModel()
+    private readonly NodeCatalogueStore _ncs;
+    public EditorViewModel(NodeCatalogueStore ncs)
     {
+        _ncs = ncs;
+
         PendingConnection = new(this);
         DisconnectConnectorCommand = new RelayCommand<ConnectorViewModel>(Disconnect);
 
@@ -61,6 +66,15 @@ public class EditorViewModel : ViewModelBase
 
     public ICommand DisconnectConnectorCommand { get; }
 
+    public void AddNode(string definitionName, Point point)
+    {
+        NodeDefinition nodeDef = _ncs.Get(definitionName);
+        NodeViewModel2 nvm2 = new("text", [], [])
+        {
+            Location = point
+        };
+        Nodes.Add(nvm2);
+    }
     public void Connect(ConnectorViewModel source, ConnectorViewModel target)
     {
         if (source != target)

@@ -1,12 +1,14 @@
-﻿namespace ProjectAttempt.ViewModels;
+﻿using ProjectAttempt.Stores;
+
+namespace ProjectAttempt.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
     public ComponentPanelViewModel ComponentPanelViewModel { get; }
     public EditorViewModel EditorViewModel { get; }
-    public MainWindowViewModel()
+    public MainWindowViewModel(NodeCatalogueStore ncs)
     {
-        ComponentPanelViewModel = new();
-        EditorViewModel = new();
+        ComponentPanelViewModel = new(ncs);
+        EditorViewModel = new(ncs);
     }
 }
